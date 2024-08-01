@@ -1,5 +1,7 @@
 package com.jozeftvrdy.o2_home_assignment.data.repository
 
+import com.jozeftvrdy.networking.api.VersionApi
+import com.jozeftvrdy.networking.model.ifSuccess
 import com.jozeftvrdy.o2_home_assignment.data.model.CardStateModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,9 +9,13 @@ import kotlinx.coroutines.flow.StateFlow
 import java.util.UUID
 
 private const val revealingOperationMillis: Long = 3000
+private const val androidValidationValue = 277028
 
-class ScratchRepository {
-    private val mutableCardStateFlow: MutableStateFlow<CardStateModel> = MutableStateFlow(CardStateModel.Initial)
+class ScratchRepository(
+    private val versionApi: VersionApi
+) {
+    private val mutableCardStateFlow: MutableStateFlow<CardStateModel> =
+        MutableStateFlow(CardStateModel.Initial)
     val cardStateFlow: StateFlow<CardStateModel>
         get() = mutableCardStateFlow
 
@@ -28,18 +34,31 @@ class ScratchRepository {
         )
     }
 
-    suspend fun registerCard() {
+    suspend fun registerCard(): Result<Unit> = kotlin.runCatching {
         val currentState = mutableCardStateFlow.value
-        if ( currentState is CardStateModel.Revealed.Unregistered) {
-            delay(revealingOperationMillis)
+        return if (currentState is CardStateModel.Revealed.Unregistered) {
+            versionApi.getVersion(currentState.generatedUUID).ifSuccess { success ->
+                if (success.android <= androidValidationValue) {
+                    throw ValidationException()
+                }
 
-            mutableCardStateFlow.emit(
-                CardStateModel.Revealed.Registered(
-                    generatedUUID = currentState.generatedUUID
+                mutableCardStateFlow.emit(
+                    CardStateModel.Revealed.Registered(
+                        generatedUUID = currentState.generatedUUID
+                    )
                 )
-            )
+
+                return@runCatching
+            }
+
+            throw GeneralException()
         } else {
-            assert(false)
+            Result.failure(
+                IllegalStateException()
+            )
         }
     }
+
+    class ValidationException: Exception()
+    class GeneralException: Exception()
 }

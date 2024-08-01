@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlinx.serialization)
 }
 
 android {
-    namespace = "com.jozeftvrdy.o2_home_assignment.data"
+    namespace = "com.jozeftvrdy.networking"
     compileSdk = 34
 
     defaultConfig {
@@ -33,12 +34,15 @@ android {
 }
 
 dependencies {
-    implementation(project(":networking"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.koin.android)
+    implementation(libs.ktor.android)
+    implementation(libs.ktor.kotlinx.serialization)
+    implementation(libs.ktor.logging)
+    implementation(libs.ktor.content.negotiation)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

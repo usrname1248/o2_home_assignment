@@ -5,6 +5,8 @@ import org.koin.dsl.module
 
 val dataModule = module {
     single {
-        ScratchRepository()
+        ScratchRepository(
+            versionApi = get()
+        )
     }
 }
