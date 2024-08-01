@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scratch_card_loading_title">Card is loading</string>
+    <string name="scratch_card_loading_text">Please wait.</string>
+    <string name="scratch_card_unrevealed_title">Card not scratched yet</string>
+    <string name="scratch_card_unrevealed_text">Go to scratch screen to reveal it.</string>
+    <string name="scratch_card_revealed_title">Card revealed.</string>
+    <string name="scratch_card_revealed_text">Go to registration screen to register the %s card.</string>
+    <string name="scratch_card_registered_title">Card registered</string>
+    <string name="scratch_card_registered_text">Congratulations. Card with value %s was successfully registered.</string>
+    <string name="scratch_card_registration_failed_title">Card registration failed</string>
+    <string name="scratch_card_registration_failed_text">Please go to registration screen to register the %s card.</string>
+
+    <string name="main_screen_to_scratch_screen">Scratch card</string>
+    <string name="main_screen_to_registration_screen">Register card</string>
+
+    <string name="scratch_screen_title">This card is not scratched yet.</string>
+    <string name="scratch_screen_text">Click the button to start scratching.</string>
+    <string name="scratch_screen_btn">Scratch!</string>
+
+    <string name="registration_screen_title">This card is not registered yet.</string>
+    <string name="registration_screen_text">Click the button to start registration.</string>
+    <string name="registration_screen_btn">Register!</string>
+</resources>

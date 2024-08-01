@@ -7,7 +7,7 @@ class NavigationImpl(private val navController: NavController) : Navigation {
         navController.navigate(route = screen.route)
     }
 
-    override fun popBackTo(screen: Screen) {
-        navController.popBackStack(route = screen.route, inclusive = true)
+    override fun popBack() {
+        navController.popBackStack()
     }
 }

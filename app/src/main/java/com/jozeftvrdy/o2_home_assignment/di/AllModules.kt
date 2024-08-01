@@ -1,8 +1,11 @@
 package com.jozeftvrdy.o2_home_assignment.di
 
 import com.jozeftvrdy.o2_home_assignment.data.di.dataModule
-import org.koin.core.module.Module
+import com.jozeftvrdy.o2_home_assignment.domain.di.domainModule
+import com.jozeftvrdy.o2_home_assignment.feature.scratch.di.scratchFeatureModule
 
-val allModules = listOf<Module>(
+val allModules = listOf(
+    scratchFeatureModule,
+    domainModule,
     dataModule
 )
