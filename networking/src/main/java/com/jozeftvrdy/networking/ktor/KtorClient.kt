@@ -18,7 +18,7 @@ private const val retryInterval = 5000L
 private const val connectTimeoutInterval = 15000L
 private const val socketTimeoutInterval = 15000L
 
-fun initKtorHttpClient() : HttpClient = HttpClient(Android) {
+fun initKtorHttpClient(): HttpClient = HttpClient(Android) {
 
     install(ContentNegotiation) {
         register(
@@ -30,7 +30,7 @@ fun initKtorHttpClient() : HttpClient = HttpClient(Android) {
             )
         )
 
-        json( Json {
+        json(Json {
             prettyPrint = true
             ignoreUnknownKeys = true
         })

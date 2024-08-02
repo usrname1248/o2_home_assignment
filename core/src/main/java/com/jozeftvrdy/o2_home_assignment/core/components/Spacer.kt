@@ -14,10 +14,20 @@ fun Spacer(rawSize: Int) {
 
 @Composable
 fun RowScope.WeightSpacer(weight: Float = 1f, fill: Boolean = true) {
-    androidx.compose.foundation.layout.Spacer(modifier = Modifier.weight(weight = weight, fill = fill))
+    androidx.compose.foundation.layout.Spacer(
+        modifier = Modifier.weight(
+            weight = weight,
+            fill = fill
+        )
+    )
 }
 
 @Composable
 fun ColumnScope.WeightSpacer(weight: Float = 1f, fill: Boolean = true) {
-    androidx.compose.foundation.layout.Spacer(modifier = Modifier.weight(weight = weight, fill = fill))
+    androidx.compose.foundation.layout.Spacer(
+        modifier = Modifier.weight(
+            weight = weight,
+            fill = fill
+        )
+    )
 }

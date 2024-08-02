@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.StateFlow
 class GetScratchCardFlowUseCase(
     private val repository: ScratchRepository
 ) {
-    operator fun invoke() : StateFlow<CardStateModel> = repository.cardStateFlow
+    operator fun invoke(): StateFlow<CardStateModel> = repository.cardStateFlow
 }

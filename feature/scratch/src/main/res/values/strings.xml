@@ -20,11 +20,16 @@
     <string name="main_screen_to_scratch_screen">Scratch card</string>
     <string name="main_screen_to_registration_screen">Register card</string>
 
-    <string name="scratch_screen_title">This card is not scratched yet.</string>
+    <string name="scratch_screen_title">This card is not scratched yet</string>
     <string name="scratch_screen_text">Click the button to start scratching.</string>
+    <string name="scratch_screen_done_title">This card is aldready scratched</string>
+    <string name="scratch_screen_done_text">Go back to continue to registration.</string>
     <string name="scratch_screen_btn">Scratch!</string>
 
-    <string name="registration_screen_title">This card is not registered yet.</string>
+
+    <string name="registration_screen_title">This card is not registered yet</string>
     <string name="registration_screen_text">Click the button to start registration.</string>
+    <string name="registration_screen_done_title">This card is already registered</string>
+    <string name="registration_screen_done_text">Well, sorry, no idea where to continue next.</string>
     <string name="registration_screen_btn">Register!</string>
 </resources>

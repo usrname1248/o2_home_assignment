@@ -7,7 +7,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 
 @Composable
-fun Modifier.conditional(conditionResult: Boolean, conditionalCallBack: @Composable Modifier.() -> Modifier) = if (conditionResult) {
+fun Modifier.conditional(
+    conditionResult: Boolean,
+    conditionalCallBack: @Composable Modifier.() -> Modifier
+) = if (conditionResult) {
     this.then(
         Modifier.run {
             conditionalCallBack()
@@ -18,8 +21,8 @@ fun Modifier.conditional(conditionResult: Boolean, conditionalCallBack: @Composa
 @Composable
 fun Modifier.nonRippleClick(
     onClick: () -> Unit
-) : Modifier = this.clickable(
+): Modifier = this.clickable(
     onClick = onClick,
-    interactionSource =  remember { MutableInteractionSource() },
+    interactionSource = remember { MutableInteractionSource() },
     indication = null
 )

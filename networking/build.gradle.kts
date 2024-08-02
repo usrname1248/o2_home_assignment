@@ -43,7 +43,4 @@ dependencies {
     implementation(libs.ktor.kotlinx.serialization)
     implementation(libs.ktor.logging)
     implementation(libs.ktor.content.negotiation)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

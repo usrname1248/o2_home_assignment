@@ -20,13 +20,14 @@ class RegistrationViewModel(
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val scratchCardUiState: StateFlow<ScratchCardUiState> = getScratchCardFlowUseCase().mapLatest { repoModel ->
-        repoModel.toUiModel()
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 2000),
-        initialValue = ScratchCardUiState.Loading
-    )
+    val scratchCardUiState: StateFlow<ScratchCardUiState> =
+        getScratchCardFlowUseCase().mapLatest { repoModel ->
+            repoModel.toUiModel()
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 2000),
+            initialValue = ScratchCardUiState.Loading
+        )
 
     fun register() {
         viewModelScope.launch {

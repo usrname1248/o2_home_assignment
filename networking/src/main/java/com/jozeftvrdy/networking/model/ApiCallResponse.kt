@@ -10,7 +10,7 @@ sealed interface ApiCallResponse<out T> {
     ) : ApiCallResponse<T>
 
 
-    sealed interface FailedApiCallResponse: ApiCallResponse<Nothing> {
+    sealed interface FailedApiCallResponse : ApiCallResponse<Nothing> {
         /**
          * Represents failed network responses (3xx, 4xx, 5xx)
          */

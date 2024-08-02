@@ -1,5 +1,9 @@
 package com.jozeftvrdy.o2_home_assignment.core.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,53 +31,67 @@ fun AppBarTitle() {
 
 @Composable
 fun ScreenTitle(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     text: String,
-    fontSize:  TextUnit = 24.sp,
+    fontSize: TextUnit = 24.sp,
     color: Color = MaterialTheme.colorScheme.primary,
     fontWeight: FontWeight = FontWeight.SemiBold,
     textAlign: TextAlign = TextAlign.Center
 ) {
-    Text(
-        modifier = modifier,
-        text = text,
-        textAlign = textAlign,
-        style = TextStyle(
-            fontSize = fontSize,
-            color = color,
-            fontWeight = fontWeight
+    AnimatedContent(
+        targetState = text,
+        transitionSpec = {
+            fadeIn().togetherWith(fadeOut())
+        }
+    ) { animatedText ->
+        Text(
+            modifier = modifier,
+            text = animatedText,
+            textAlign = textAlign,
+            style = TextStyle(
+                fontSize = fontSize,
+                color = color,
+                fontWeight = fontWeight
+            )
         )
-    )
+    }
 }
 
 @Composable
 fun ScreenText(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier,
     text: String,
-    fontSize:  TextUnit = 16.sp,
+    fontSize: TextUnit = 16.sp,
     color: Color = MaterialTheme.colorScheme.secondary,
     fontWeight: FontWeight = FontWeight.Medium,
-    textAlign: TextAlign = TextAlign.Start
+    textAlign: TextAlign = TextAlign.Center
 ) {
-    Text(
-        modifier = modifier,
-        text = text,
-        textAlign = textAlign,
-        style = TextStyle(
-            fontSize = fontSize,
-            color = color,
-            fontWeight = fontWeight
+    AnimatedContent(
+        targetState = text,
+        transitionSpec = {
+            fadeIn().togetherWith(fadeOut())
+        }
+    ) { animatedText ->
+        Text(
+            modifier = modifier,
+            text = animatedText,
+            textAlign = textAlign,
+            style = TextStyle(
+                fontSize = fontSize,
+                color = color,
+                fontWeight = fontWeight
+            )
         )
-    )
+    }
 }
 
 @Composable
 fun ButtonText(
     text: String,
-    fontSize:  TextUnit = 16.sp,
+    fontSize: TextUnit = 16.sp,
     enabled: Boolean = true,
     color: Color = if (enabled) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.secondary,
-    fontWeight: FontWeight = if (enabled) FontWeight.SemiBold else  FontWeight.Thin,
+    fontWeight: FontWeight = if (enabled) FontWeight.SemiBold else FontWeight.Thin,
     textAlign: TextAlign = TextAlign.Start
 ) {
     Text(

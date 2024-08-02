@@ -15,6 +15,6 @@ interface ScratchRepository {
     @Throws(IllegalStateException::class)
     suspend fun registerCard()
 
-    class ValidationException: Exception()
-    class GeneralException: Exception()
+    class ValidationException : Exception()
+    class GeneralException : Exception()
 }

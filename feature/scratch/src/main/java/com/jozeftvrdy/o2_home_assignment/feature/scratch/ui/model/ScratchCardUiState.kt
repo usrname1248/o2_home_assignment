@@ -6,95 +6,107 @@ import com.jozeftvrdy.o2_home_assignment.data.model.CardStateModel
 import com.jozeftvrdy.o2_home_assignment.feature.scratch.R
 
 sealed class ScratchCardUiState {
-    abstract val title: String
+    abstract val mainScreenTitle: String
         @Composable get
 
-    abstract val text: String
+    abstract val mainScreenText: String
         @Composable get
-
 
     val scratchButtonEnabled: Boolean
         get() = this is Unrevealed
     val registrationButtonEnabled: Boolean
-        get() = this is Revealed
+        get() = this is Revealed && this !is Revealed.Registered
 
 
     data object Loading : ScratchCardUiState() {
-        override val title: String
+        override val mainScreenTitle: String
             @Composable get() = stringResource(id = R.string.scratch_card_loading_title)
 
-        override val text: String
+        override val mainScreenText: String
             @Composable get() = stringResource(id = R.string.scratch_card_loading_text)
 
     }
 
-    sealed class Unrevealed: ScratchCardUiState() {
+    sealed class Unrevealed : ScratchCardUiState() {
         data object NotScratched : Unrevealed() {
-            override val title: String
+            override val mainScreenTitle: String
                 @Composable get() = stringResource(id = R.string.scratch_card_not_scratched_title)
 
-            override val text: String
+            override val mainScreenText: String
                 @Composable get() = stringResource(id = R.string.scratch_card_not_scratched_text)
         }
 
         data object Scratching : Unrevealed() {
-            override val title: String
+            override val mainScreenTitle: String
                 @Composable get() = stringResource(id = R.string.scratch_card_scratching_title)
 
-            override val text: String
+            override val mainScreenText: String
                 @Composable get() = stringResource(id = R.string.scratch_card_scratching_text)
         }
 
         data object ScratchFailed : Unrevealed() {
-            override val title: String
+            override val mainScreenTitle: String
                 @Composable get() = stringResource(id = R.string.scratch_card_scratch_failed_title)
 
-            override val text: String
+            override val mainScreenText: String
                 @Composable get() = stringResource(id = R.string.scratch_card_scratch_failed_text)
         }
     }
 
-    sealed class Revealed: ScratchCardUiState() {
+    sealed class Revealed : ScratchCardUiState() {
+
         abstract val generatedUUID: String
 
         data class Unregistered(
             override val generatedUUID: String
-        ): Revealed() {
-            override val title: String
+        ) : Revealed() {
+            override val mainScreenTitle: String
                 @Composable get() = stringResource(id = R.string.scratch_card_revealed_title)
 
-            override val text: String
-                @Composable get() = stringResource(id = R.string.scratch_card_revealed_text, generatedUUID)
+            override val mainScreenText: String
+                @Composable get() = stringResource(
+                    id = R.string.scratch_card_revealed_text,
+                    generatedUUID
+                )
         }
 
         data class Registering(
             override val generatedUUID: String
-        ): Revealed() {
-            override val title: String
+        ) : Revealed() {
+            override val mainScreenTitle: String
                 @Composable get() = stringResource(id = R.string.scratch_card_registration_in_progress_title)
 
-            override val text: String
-                @Composable get() = stringResource(id = R.string.scratch_card_registration_in_progress_text, generatedUUID)
+            override val mainScreenText: String
+                @Composable get() = stringResource(
+                    id = R.string.scratch_card_registration_in_progress_text,
+                    generatedUUID
+                )
         }
 
         data class Registered(
             override val generatedUUID: String
-        ): Revealed() {
-            override val title: String
+        ) : Revealed() {
+            override val mainScreenTitle: String
                 @Composable get() = stringResource(id = R.string.scratch_card_registered_title)
 
-            override val text: String
-                @Composable get() = stringResource(id = R.string.scratch_card_registered_text, generatedUUID)
+            override val mainScreenText: String
+                @Composable get() = stringResource(
+                    id = R.string.scratch_card_registered_text,
+                    generatedUUID
+                )
         }
 
         data class RegistrationFailed(
             override val generatedUUID: String
-        ): Revealed() {
-            override val title: String
+        ) : Revealed() {
+            override val mainScreenTitle: String
                 @Composable get() = stringResource(id = R.string.scratch_card_registration_failed_title)
 
-            override val text: String
-                @Composable get() = stringResource(id = R.string.scratch_card_registration_failed_text, generatedUUID)
+            override val mainScreenText: String
+                @Composable get() = stringResource(
+                    id = R.string.scratch_card_registration_failed_text,
+                    generatedUUID
+                )
         }
     }
 }
@@ -106,12 +118,15 @@ fun CardStateModel.toUiModel(): ScratchCardUiState = when (this) {
     is CardStateModel.Revealed.Unregistered -> ScratchCardUiState.Revealed.Unregistered(
         generatedUUID = this.generatedUUID.toString()
     )
+
     is CardStateModel.Revealed.Registering -> ScratchCardUiState.Revealed.Registering(
         generatedUUID = this.generatedUUID.toString()
     )
+
     is CardStateModel.Revealed.Registered -> ScratchCardUiState.Revealed.Registered(
         generatedUUID = this.generatedUUID.toString()
     )
+
     is CardStateModel.Revealed.RegisterFailed -> ScratchCardUiState.Revealed.RegistrationFailed(
         generatedUUID = this.generatedUUID.toString()
     )

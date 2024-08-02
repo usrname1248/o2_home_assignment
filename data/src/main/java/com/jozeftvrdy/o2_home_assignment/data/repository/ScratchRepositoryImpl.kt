@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 import java.util.UUID
 
 
-
 class ScratchRepositoryImpl(
     private val versionApi: VersionApi
 ) : ScratchRepository {
@@ -86,6 +85,6 @@ class ScratchRepositoryImpl(
         }
     }
 
-    class ValidationException: Exception()
-    class GeneralException: Exception()
+    class ValidationException : Exception()
+    class GeneralException : Exception()
 }

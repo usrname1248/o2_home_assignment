@@ -31,14 +31,14 @@ class KtorNetworkCallFactory(
         reqBody: Any? = null,
         headers: NetworkHeaders = EmptyNetworkHeaders,
         queryParams: NetworkQueryParams = EmptyNetworkQueryParams,
-    ) : ApiCallResponse<T> = apiCall(
+    ): ApiCallResponse<T> = apiCall(
         path = path,
         httpMethod = httpMethod,
         reqBody = reqBody,
         headers = headers,
         queryParams = queryParams,
         successCast = {
-            val successResponse : T = it.body()
+            val successResponse: T = it.body()
             successResponse
         }
     )
@@ -51,7 +51,7 @@ class KtorNetworkCallFactory(
         headers: NetworkHeaders,
         queryParams: NetworkQueryParams,
         successCast: suspend (HttpResponse) -> T,
-    ) : ApiCallResponse<T> = internalApiCall(
+    ): ApiCallResponse<T> = internalApiCall(
         successCast = successCast
     ) {
         ktorHttpClient.request(baseUrl + path) {

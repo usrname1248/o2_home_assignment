@@ -61,7 +61,11 @@ open class ScratchRepositoryImplTest : TestCase() {
 
             coEvery {
                 versionApi.getVersion((returnedValue as CardStateModel.Revealed.Unregistered).generatedUUID)
-            } returns ApiCallResponse.SuccessApiCallResponse(VersionApiResponse(ScratchRepositoryImpl.androidValidationValue + 1L))
+            } returns ApiCallResponse.SuccessApiCallResponse(
+                VersionApiResponse(
+                    ScratchRepositoryImpl.androidValidationValue + 1L
+                )
+            )
 
             repository.registerCard()
 
@@ -124,7 +128,11 @@ open class ScratchRepositoryImplTest : TestCase() {
 
             coEvery {
                 versionApi.getVersion((returnedValue as CardStateModel.Revealed.Unregistered).generatedUUID)
-            } returns ApiCallResponse.SuccessApiCallResponse(VersionApiResponse(ScratchRepositoryImpl.androidValidationValue + 1L))
+            } returns ApiCallResponse.SuccessApiCallResponse(
+                VersionApiResponse(
+                    ScratchRepositoryImpl.androidValidationValue + 1L
+                )
+            )
 
             val collectedCardStates = mutableListOf<CardStateModel>()
             val jobs = launch {
@@ -165,7 +173,11 @@ open class ScratchRepositoryImplTest : TestCase() {
 
             coEvery {
                 versionApi.getVersion((revealCardReturnedValue as CardStateModel.Revealed.Unregistered).generatedUUID)
-            } returns ApiCallResponse.SuccessApiCallResponse(VersionApiResponse(ScratchRepositoryImpl.androidValidationValue - 1L))
+            } returns ApiCallResponse.SuccessApiCallResponse(
+                VersionApiResponse(
+                    ScratchRepositoryImpl.androidValidationValue - 1L
+                )
+            )
 
             kotlin.runCatching {
                 repository.registerCard()

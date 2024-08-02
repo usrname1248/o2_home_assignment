@@ -41,12 +41,13 @@ fun ScreenTitleContent(
                 },
                 navigationIcon = {
                     if (onBackClicked != null) {
-                        Box(modifier = Modifier
-                            .fillMaxHeight()
-                            .widthIn(min = 44.dp)
-                            .nonRippleClick (
-                                onClick = onBackClicked,
-                            ),
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .widthIn(min = 44.dp)
+                                .nonRippleClick(
+                                    onClick = onBackClicked,
+                                ),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -69,22 +70,34 @@ fun ScreenTitleContent(
                 .safeDrawingPadding(),
             verticalArrangement = Arrangement.Center,
         ) {
-
-            Spacer(rawSize = 36)
-            ScreenTitle(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = title,
+            ScreenTitleColumnContent(
+                title = title,
+                text = text,
+                additionalContent = additionalContent
             )
-            Spacer(rawSize = 24)
-            ScreenText(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                text = text
-            )
-            Spacer(rawSize = 16)
-            additionalContent()
         }
     }
+}
+
+@Composable
+private fun ColumnScope.ScreenTitleColumnContent(
+    title: String,
+    text: String,
+    additionalContent: @Composable ColumnScope.() -> Unit
+) {
+    Spacer(rawSize = 36)
+    ScreenTitle(
+        modifier = Modifier
+            .fillMaxWidth(),
+        text = title,
+    )
+    Spacer(rawSize = 24)
+    ScreenText(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp),
+        text = text
+    )
+    Spacer(rawSize = 16)
+    additionalContent()
 }

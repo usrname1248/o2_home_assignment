@@ -3,9 +3,9 @@ package com.jozeftvrdy.o2_home_assignment.feature.scratch.ui.screen.main
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,9 +15,15 @@ import com.jozeftvrdy.o2_home_assignment.core.components.ScreenTitleContent
 import com.jozeftvrdy.o2_home_assignment.core.components.WeightSpacer
 import com.jozeftvrdy.o2_home_assignment.core.navigation.Navigation
 import com.jozeftvrdy.o2_home_assignment.core.navigation.Screen
+import com.jozeftvrdy.o2_home_assignment.core.ui.animated.AnimatedDisabledButton
+import com.jozeftvrdy.o2_home_assignment.core.ui.animated.AnimatedDisabledButtonState
 import com.jozeftvrdy.o2_home_assignment.feature.scratch.R
 import com.jozeftvrdy.o2_home_assignment.feature.scratch.ui.model.ScratchCardUiState
 import org.koin.androidx.compose.koinViewModel
+
+private data class AnimatedDisabledButtonStateImpl(
+    override val isButtonEnabled: Boolean
+) : AnimatedDisabledButtonState
 
 @Composable
 fun MainScreen(
@@ -46,8 +52,8 @@ private fun MainScreen(
     navigateToRegister: () -> Unit
 ) {
     ScreenTitleContent(
-        title = uiState.title,
-        text = uiState.text
+        title = uiState.mainScreenTitle,
+        text = uiState.mainScreenText
     ) {
         WeightSpacer()
 
@@ -65,29 +71,57 @@ private fun MainScreenButtons(
     navigateToScratch: () -> Unit,
     navigateToRegister: () -> Unit
 ) {
+    val scratchButtonState = remember(uiState.scratchButtonEnabled) {
+        AnimatedDisabledButtonStateImpl(
+            isButtonEnabled = uiState.scratchButtonEnabled
+        )
+    }
+
+    val registerButtonState = remember(uiState.registrationButtonEnabled) {
+        AnimatedDisabledButtonStateImpl(
+            isButtonEnabled = uiState.registrationButtonEnabled
+        )
+    }
+
+    MainScreenButtons(
+        scratchButtonState = scratchButtonState,
+        registerButtonState = registerButtonState,
+        navigateToScratch = navigateToScratch,
+        navigateToRegister = navigateToRegister
+    )
+}
+
+@Composable
+private fun MainScreenButtons(
+    scratchButtonState: AnimatedDisabledButtonStateImpl,
+    registerButtonState: AnimatedDisabledButtonStateImpl,
+    navigateToScratch: () -> Unit,
+    navigateToRegister: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        Button(
-            onClick = navigateToScratch,
-            enabled = uiState.scratchButtonEnabled
-        ) {
+        AnimatedDisabledButton(
+            state = scratchButtonState,
+            onClick = navigateToScratch
+        ) { animatedButtonState ->
             ButtonText(
                 text = stringResource(id = R.string.main_screen_to_scratch_screen),
-                enabled = uiState.scratchButtonEnabled
+                enabled = animatedButtonState.isButtonEnabled
             )
         }
 
-        Button(
-            onClick = navigateToRegister,
-            enabled = uiState.registrationButtonEnabled
-        ) {
+
+        AnimatedDisabledButton(
+            state = registerButtonState,
+            onClick = navigateToRegister
+        ) { animatedButtonState ->
             ButtonText(
                 text = stringResource(id = R.string.main_screen_to_registration_screen),
-                enabled = uiState.registrationButtonEnabled
+                enabled = animatedButtonState.isButtonEnabled
             )
         }
     }
