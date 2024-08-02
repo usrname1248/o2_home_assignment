@@ -31,8 +31,6 @@ fun RegistrationScreen(
     )
 ) {
     val cardState by viewModel.scratchCardUiState.collectAsStateWithLifecycle()
-    val loadingState by viewModel.isRegisteringState
-
     LaunchedEffect(key1 = cardState) {
         if (cardState is ScratchCardUiState.Revealed.Registered) {
             navigation.popBack()
@@ -40,7 +38,7 @@ fun RegistrationScreen(
     }
 
     RegistrationScreen(
-        isLoading = loadingState,
+        isLoading = cardState is ScratchCardUiState.Revealed.Registering,
         onRegisterClicked = {
             viewModel.register()
         },

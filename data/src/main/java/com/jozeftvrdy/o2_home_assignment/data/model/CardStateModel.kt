@@ -3,21 +3,31 @@ package com.jozeftvrdy.o2_home_assignment.data.model
 import java.util.UUID
 
 sealed class CardStateModel {
-    data object Initial: CardStateModel()
+    sealed class Unrevealed : CardStateModel() {
+        data object Initial : Unrevealed()
 
-    sealed class Revealed: CardStateModel() {
+        data object Scratching : Unrevealed()
+
+        data object ScratchingFailed : Unrevealed()
+    }
+
+    sealed class Revealed : CardStateModel() {
         abstract val generatedUUID: UUID
 
-        data class Unregistered(
+        class Unregistered(
             override val generatedUUID: UUID
-        ): Revealed()
+        ) : Revealed()
 
-        data class Registered(
+        class Registering(
             override val generatedUUID: UUID
-        ): Revealed()
+        ) : Revealed()
 
-        data class RegisterFailed(
+        class Registered(
             override val generatedUUID: UUID
-        ): Revealed()
+        ) : Revealed()
+
+        class RegisterFailed(
+            override val generatedUUID: UUID
+        ) : Revealed()
     }
 }

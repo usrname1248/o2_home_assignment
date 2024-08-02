@@ -71,26 +71,23 @@ private fun MainScreenButtons(
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        val scratchButtonEnabled = uiState is ScratchCardUiState.Hidden
-        val registerButtonEnabled = uiState is ScratchCardUiState.Revealed
-
         Button(
             onClick = navigateToScratch,
-            enabled = scratchButtonEnabled
+            enabled = uiState.scratchButtonEnabled
         ) {
             ButtonText(
                 text = stringResource(id = R.string.main_screen_to_scratch_screen),
-                enabled = scratchButtonEnabled
+                enabled = uiState.scratchButtonEnabled
             )
         }
 
         Button(
             onClick = navigateToRegister,
-            enabled = registerButtonEnabled
+            enabled = uiState.registrationButtonEnabled
         ) {
             ButtonText(
                 text = stringResource(id = R.string.main_screen_to_registration_screen),
-                enabled = registerButtonEnabled
+                enabled = uiState.registrationButtonEnabled
             )
         }
     }

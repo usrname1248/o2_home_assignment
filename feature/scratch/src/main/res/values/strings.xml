@@ -2,10 +2,16 @@
 <resources>
     <string name="scratch_card_loading_title">Card is loading</string>
     <string name="scratch_card_loading_text">Please wait.</string>
-    <string name="scratch_card_unrevealed_title">Card not scratched yet</string>
-    <string name="scratch_card_unrevealed_text">Go to scratch screen to reveal it.</string>
+    <string name="scratch_card_not_scratched_title">Card not scratched yet</string>
+    <string name="scratch_card_not_scratched_text">Go to scratch screen to reveal it.</string>
+    <string name="scratch_card_scratching_title">Card is being scratched</string>
+    <string name="scratch_card_scratching_text">Please wait, until process is completed.</string>
+    <string name="scratch_card_scratch_failed_title">Card scratching failed</string>
+    <string name="scratch_card_scratch_failed_text">Go to scratch screen to reveal it once again.</string>
     <string name="scratch_card_revealed_title">Card revealed.</string>
     <string name="scratch_card_revealed_text">Go to registration screen to register the %s card.</string>
+    <string name="scratch_card_registration_in_progress_title">Card is registering</string>
+    <string name="scratch_card_registration_in_progress_text">Please wait. Card with value %s is registering.</string>
     <string name="scratch_card_registered_title">Card registered</string>
     <string name="scratch_card_registered_text">Congratulations. Card with value %s was successfully registered.</string>
     <string name="scratch_card_registration_failed_title">Card registration failed</string>

@@ -27,7 +27,6 @@ fun ScratchScreen(
     viewModel: ScratchViewModel = koinViewModel()
 ) {
     val cardState by viewModel.scratchCardUiState.collectAsStateWithLifecycle()
-    val loadingState by viewModel.isScratchingState
     
     LaunchedEffect(key1 = cardState) {
         if (cardState is ScratchCardUiState.Revealed) {
@@ -35,8 +34,10 @@ fun ScratchScreen(
         }
     }
 
+
+
     ScratchScreen(
-        isLoading = loadingState,
+        isLoading = cardState is ScratchCardUiState.Unrevealed.Scratching,
         onRegisterClicked = {
             viewModel.scratch()
         },

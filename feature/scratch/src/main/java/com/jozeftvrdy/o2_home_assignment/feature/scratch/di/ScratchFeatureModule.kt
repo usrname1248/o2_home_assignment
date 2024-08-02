@@ -10,7 +10,6 @@ val scratchFeatureModule = module {
     viewModel {
         MainScreenViewModel(
             getScratchCardFlowUseCase = get(),
-            savedStateHandle = get()
         )
     }
 
@@ -18,7 +17,6 @@ val scratchFeatureModule = module {
         ScratchViewModel(
             scratchRepository = get(),
             getScratchCardFlowUseCase = get(),
-            savedStateHandle = get()
         )
     }
 
@@ -26,7 +24,6 @@ val scratchFeatureModule = module {
         RegistrationViewModel(
             scratchRepository = get(),
             getScratchCardFlowUseCase = get(),
-            savedStateHandle = get(),
         )
     }
 }

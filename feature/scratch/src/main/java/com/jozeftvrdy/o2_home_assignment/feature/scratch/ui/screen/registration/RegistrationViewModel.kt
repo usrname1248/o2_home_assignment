@@ -1,9 +1,6 @@
 package com.jozeftvrdy.o2_home_assignment.feature.scratch.ui.screen.registration
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jozeftvrdy.o2_home_assignment.data.repository.ScratchRepository
@@ -20,7 +17,6 @@ import kotlinx.coroutines.launch
 class RegistrationViewModel(
     private val scratchRepository: ScratchRepository,
     getScratchCardFlowUseCase: GetScratchCardFlowUseCase,
-    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -32,15 +28,14 @@ class RegistrationViewModel(
         initialValue = ScratchCardUiState.Loading
     )
 
-    private val isRegisteringMutableState : MutableState<Boolean> = mutableStateOf(false)
-    val isRegisteringState : State<Boolean>
-        get() = isRegisteringMutableState
-
     fun register() {
         viewModelScope.launch {
-            isRegisteringMutableState.value = true
-            scratchRepository.registerCard()
-            isRegisteringMutableState.value = false
+            runCatching {
+                scratchRepository.registerCard()
+            }.onFailure {
+                // should not happen because screen is unavailable while in unscratched state
+                Log.e(null, "RegistrationViewModel::register failed", it)
+            }
         }
     }
 }

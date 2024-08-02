@@ -15,46 +15,69 @@ class ScratchRepository(
     private val versionApi: VersionApi
 ) {
     private val mutableCardStateFlow: MutableStateFlow<CardStateModel> =
-        MutableStateFlow(CardStateModel.Initial)
+        MutableStateFlow(CardStateModel.Unrevealed.Initial)
     val cardStateFlow: StateFlow<CardStateModel>
         get() = mutableCardStateFlow
 
 
     suspend fun revealCard() {
-        assert(mutableCardStateFlow.value is CardStateModel.Initial)
-
-        val generatedUUID: UUID = UUID.randomUUID()
-
-        delay(revealingOperationMillis)
+        val currentValue = mutableCardStateFlow.value
+        assert(currentValue is CardStateModel.Unrevealed.Initial || currentValue is CardStateModel.Unrevealed.ScratchingFailed)
 
         mutableCardStateFlow.emit(
-            CardStateModel.Revealed.Unregistered(
-                generatedUUID = generatedUUID
-            )
+            CardStateModel.Unrevealed.Scratching
         )
+
+        kotlin.runCatching {
+            val generatedUUID: UUID = UUID.randomUUID()
+            delay(revealingOperationMillis)
+            generatedUUID
+        }.onFailure {
+            mutableCardStateFlow.emit(
+                CardStateModel.Unrevealed.ScratchingFailed
+            )
+        }.onSuccess {
+            mutableCardStateFlow.emit(
+                CardStateModel.Revealed.Unregistered(
+                    generatedUUID = it
+                )
+            )
+        }
+
     }
 
-    suspend fun registerCard(): Result<Unit> = kotlin.runCatching {
+    @Throws(IllegalStateException::class)
+    suspend fun registerCard() {
         val currentState = mutableCardStateFlow.value
-        return if (currentState is CardStateModel.Revealed.Unregistered) {
+        if (currentState !is CardStateModel.Revealed) {
+            throw IllegalStateException()
+        }
+
+        mutableCardStateFlow.emit(
+            CardStateModel.Revealed.Registering(
+                generatedUUID = currentState.generatedUUID
+            )
+        )
+
+        kotlin.runCatching {
             versionApi.getVersion(currentState.generatedUUID).ifSuccess { success ->
-                if (success.android <= androidValidationValue) {
-                    throw ValidationException()
+                    if (success.android <= androidValidationValue) {
+                        throw ValidationException()
+                    }
+
+                    return@runCatching mutableCardStateFlow.emit(
+                        CardStateModel.Revealed.Registered(
+                            generatedUUID = currentState.generatedUUID
+                        )
+                    )
                 }
 
-                mutableCardStateFlow.emit(
-                    CardStateModel.Revealed.Registered(
-                        generatedUUID = currentState.generatedUUID
-                    )
+                throw GeneralException()
+        }.onFailure {
+            mutableCardStateFlow.emit(
+                CardStateModel.Revealed.RegisterFailed(
+                    generatedUUID = currentState.generatedUUID
                 )
-
-                return@runCatching
-            }
-
-            throw GeneralException()
-        } else {
-            Result.failure(
-                IllegalStateException()
             )
         }
     }

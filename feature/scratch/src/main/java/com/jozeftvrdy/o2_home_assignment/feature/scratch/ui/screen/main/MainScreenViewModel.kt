@@ -1,6 +1,5 @@
 package com.jozeftvrdy.o2_home_assignment.feature.scratch.ui.screen.main
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jozeftvrdy.o2_home_assignment.domain.scratchCard.GetScratchCardFlowUseCase
@@ -14,7 +13,6 @@ import kotlinx.coroutines.flow.stateIn
 
 class MainScreenViewModel(
     getScratchCardFlowUseCase: GetScratchCardFlowUseCase,
-    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
