@@ -1,6 +1,7 @@
 package com.jozeftvrdy.networking.di
 
 import com.jozeftvrdy.networking.api.VersionApi
+import com.jozeftvrdy.networking.api.VersionApiImpl
 import com.jozeftvrdy.networking.ktor.KtorNetworkCallFactory
 import com.jozeftvrdy.networking.ktor.initKtorHttpClient
 import org.koin.dsl.module
@@ -19,8 +20,8 @@ val networkModule = module {
 }
 
 val apiModule = module {
-    factory {
-        VersionApi(
+    factory<VersionApi> {
+        VersionApiImpl(
             networkCallFactory = get()
         )
     }

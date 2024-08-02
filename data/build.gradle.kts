@@ -40,6 +40,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.koin.android)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.androidx.junit)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.junit)
 }

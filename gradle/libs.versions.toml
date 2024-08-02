@@ -14,10 +14,15 @@ appcompat = "1.6.1"
 material = "1.10.0"
 androidxLifecycle = "2.8.3"
 ktor = "2.3.12"
+coroutinesTest = "1.7.3"
+mockk = "1.12.0"
+junitJunit = "4.12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
+mockk-jvm = { group = "io.mockk", name = "mockk-jvm", version.ref = "mockk"}
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx" }
@@ -42,6 +47,8 @@ ktor-android = { group = "io.ktor", name = "ktor-client-android", version.ref= "
 ktor-kotlinx-serialization = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref= "ktor" }
 ktor-logging = { group = "io.ktor", name = "ktor-client-logging-jvm", version.ref= "ktor" }
 ktor-content_negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation-jvm", version.ref= "ktor" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest"}
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
